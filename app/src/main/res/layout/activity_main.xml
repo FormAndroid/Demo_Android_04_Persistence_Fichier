@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:gravity="top|start"
         android:padding="5dp"
-        android:inputType="textMultiLine"
         android:background="@android:color/transparent"
         />
 

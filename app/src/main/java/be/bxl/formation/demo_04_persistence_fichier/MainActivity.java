@@ -2,9 +2,13 @@ package be.bxl.formation.demo_04_persistence_fichier;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.InputType;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,17 +50,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void switchToReadMode() {
-        etContent.setEnabled(false);
-        //etContent.setInputType(InputType.TYPE_NULL);
+        closeKeyboard();
+        changeEditMode(false);
+        etContent.clearFocus();
         btnAction.setText(R.string.btn_edit);
-        editMode = false;
     }
 
     private void switchToEditMode() {
-        etContent.setEnabled(true);
-        //etContent.setInputType(131073);
+        changeEditMode(true);
         btnAction.setText(R.string.btn_save);
-        editMode = true;
+    }
+
+    private void changeEditMode(boolean editable) {
+        editMode = editable;
+        etContent.setFocusable(editable);
+        etContent.setFocusableInTouchMode(editable) ;
+        etContent.setClickable(editable);
+        etContent.setLongClickable(editable);
+        etContent.setCursorVisible(editable) ;
+    }
+
+    private void closeKeyboard() {
+        View v = this.getCurrentFocus();
+        if(v == null) {
+            v = new View(this);
+        }
+
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     private void saveContent() {
