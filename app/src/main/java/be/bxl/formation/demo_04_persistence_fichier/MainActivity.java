@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadContent() {
+        // Tester si le fichier exception
+        if(! (new File(getFilesDir(), "mon_fichier.txt")).exists()) {
+            return;
+        }
+
+        // Si le fichier exists, on lit les données
         try {
             // Flux de lecture
             FileInputStream fis = openFileInput("mon_fichier.txt");
